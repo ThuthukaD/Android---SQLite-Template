@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity
 
     public void deleteData()
     {
-        btnUpdate.setOnClickListener(new View.OnClickListener()
+        btnDelete.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -195,27 +195,22 @@ public class MainActivity extends AppCompatActivity
                 {
                     Log.i("MainActivity", "Delete Should be successful");
 
-//                    boolean isUpdated = myDb.updateData(etID.getText().toString(),
-//                            etName.getText().toString(), etSurname.getText().toString(),
-//                            etMarks.getText().toString());
-//
-//                    if (isUpdated)
-//                    {
-//                        Toast.makeText
-//                                (MainActivity.this, "Data is updated",
-//                                        Toast.LENGTH_SHORT).show();
-//                    }
-//                    else
-//                    {
-//                        Toast.makeText
-//                                (MainActivity.this, "Failed to update",
-//                                        Toast.LENGTH_SHORT).show();
-//                    }
+                    Integer deletedRows = myDb.deleteData(etID.getText().toString());
+
+                    if (deletedRows > 0)
+                    {
+                        Toast.makeText
+                                (MainActivity.this, "Data Deleted",
+                                        Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        Toast.makeText
+                                (MainActivity.this, "Data not deleted"
+                                        , Toast.LENGTH_SHORT).show();
+                    }
 
                     etID.setText(null);
-                    etName.setText(null);
-                    etSurname.setText(null);
-                    etMarks.setText(null);
                 }
             }
         });
