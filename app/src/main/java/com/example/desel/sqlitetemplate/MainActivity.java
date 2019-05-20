@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity
     Button btnAdd;
     Button btnView;
     Button btnUpdate;
+    Button btnDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity
         btnAdd = findViewById(R.id.btnAdd);
         btnView = findViewById(R.id.btnView);
         btnUpdate = findViewById(R.id.btnUpdate);
+        btnDelete = findViewById(R.id.btnDelete);
 
 //        tvID.setVisibility(View.INVISIBLE);
 //        etID.setVisibility(View.INVISIBLE);
@@ -64,6 +67,7 @@ public class MainActivity extends AppCompatActivity
         addData();
         viewData();
         updateData();
+        deleteData();
     }
 
     public void addData()
@@ -146,14 +150,76 @@ public class MainActivity extends AppCompatActivity
                 }
                 else
                 {
-                    Toast.makeText(
-                            MainActivity.this, "Check Success",
-                            Toast.LENGTH_SHORT).show();
+                    Log.i("MainActivity", "Update Should be successful");
+
+                    boolean isUpdated = myDb.updateData(etID.getText().toString(),
+                            etName.getText().toString(), etSurname.getText().toString(),
+                            etMarks.getText().toString());
+
+                    if (isUpdated)
+                    {
+                        Toast.makeText
+                                (MainActivity.this, "Data is updated",
+                                        Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        Toast.makeText
+                                (MainActivity.this, "Failed to update",
+                                        Toast.LENGTH_SHORT).show();
+                    }
+
+                    etID.setText(null);
+                    etName.setText(null);
+                    etSurname.setText(null);
+                    etMarks.setText(null);
                 }
             }
         });
     }
 
+    public void deleteData()
+    {
+        btnUpdate.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                if (tvID.getVisibility() == View.INVISIBLE &&
+                        etID.getVisibility() == View.INVISIBLE)
+                {
+                    tvID.setVisibility(View.VISIBLE);
+                    etID.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    Log.i("MainActivity", "Delete Should be successful");
+
+//                    boolean isUpdated = myDb.updateData(etID.getText().toString(),
+//                            etName.getText().toString(), etSurname.getText().toString(),
+//                            etMarks.getText().toString());
+//
+//                    if (isUpdated)
+//                    {
+//                        Toast.makeText
+//                                (MainActivity.this, "Data is updated",
+//                                        Toast.LENGTH_SHORT).show();
+//                    }
+//                    else
+//                    {
+//                        Toast.makeText
+//                                (MainActivity.this, "Failed to update",
+//                                        Toast.LENGTH_SHORT).show();
+//                    }
+
+                    etID.setText(null);
+                    etName.setText(null);
+                    etSurname.setText(null);
+                    etMarks.setText(null);
+                }
+            }
+        });
+    }
 
     public void showMesage(String title, String message)
     {
